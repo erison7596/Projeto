@@ -1,19 +1,48 @@
-Titulo: ap
-
-Area do AP em M2: 0.00
-Numero de quartos: 4557776
-Posicao: Sul
-
-Pavimentos: 4557788
-Valor do Condominio: 0.00
-Numero de vagas: 4557960
-Rua: da margura
-
-Numero: 123
-Bairro: mang
-
-CEP: 193403
-Cidade: jp
-
-Status: 1
-Valor: R$ 0.00
+{
+CASA
+CASA 1
+1
+2
+3.00 m
+4.00 m
+4.00 m
+RUA 1
+5
+BAIRRO 1
+6
+CIDADE 1
+1
+100.00
+}
+{
+APARTAMENTO
+APARTAMENO 1
+4
+2
+1.00 m
+50.00
+3
+aqui
+4.00 m
+RUA 3
+5
+BAIRRO 4
+5
+CIDADE 3
+1
+1000.00
+}
+{
+TERRENO
+TERRENO 1
+EH UM TERRENO
+1.00 m
+4.00 m
+RUA 5
+2
+BAIRRO 5
+5
+CIDADE 5
+1
+100.00
+}

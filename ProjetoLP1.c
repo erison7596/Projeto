@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
+#include <ctype.h>
 #define Maxvalor 1000
 #define Max 1000
 
@@ -23,9 +24,9 @@ T_casa casa[Max];
 typedef struct
 {
     char titulo[60], posicao[20];
-    int Nquartos[3], andar[3];
-    double area, vCondominio[10];
-    int Nvagas[3];
+    int Nquartos, andar;
+    double area, vCondominio;
+    int Nvagas;
 } T_apartamento;
 T_apartamento apartamento[Max];
 
@@ -176,23 +177,7 @@ void caasa()
             printf("\nValor da Casa:\n-");
             scanf("%lf", &info[Max].valor);
         }
-        printf("VEIO");
-        if(conectar(1)){
-            printf("VEIO AQUI");
-            fprintf(file, "Titulo: %s\n", casa[Max].titulo);
-            fprintf(file, "Pavimentos: %d\n", casa[Max].pavimentos);
-            fprintf(file, "Numero de quartos: %d\n", casa[Max].Nquartos);
-            fprintf(file, "Area Terreno: %.2lf m\n", casa[Max].areaTerreno);
-            fprintf(file, "Area Construida: %.2lf m\n", casa[Max].areaConstruida);
-            fprintf(file, "Rua: %s\n", endereco[Max].Nrua);
-            fprintf(file, "Numero: %d\n", endereco[Max].Ncasa);
-            fprintf(file, "Bairro: %s\n", endereco[Max].bairro);
-            fprintf(file, "CEP: %d\n", endereco[Max].cep);
-            fprintf(file, "Cidade: %s\n", endereco[Max].cidade);
-            fprintf(file, "Status: %d\n", info[Max].statusc[1]);
-            fprintf(file, "Valor: R$ %.2llf\n", info[Max].valor);
-            desconectar();
-        }
+        cadastrar2(1);
 
 
         printf("\n1 - Continuar\n2 - Voltar\n0 - Sair\n-");
@@ -213,10 +198,13 @@ void caasa()
     }
     while(op!=0);
 }
-void apartamentoo(){
+
+void apartamentoo()
+{
 
     int op;
-    do{
+    do
+    {
         system("cls");
 // SOBRE O AP
         printf("Informe o Titulo do Imovel:\n-");
@@ -265,46 +253,19 @@ void apartamentoo(){
         scanf("%d", &info[Max].statusa[1]);
         getchar();
 
-        if(info[Max].statusa[1]==1){
+        if(info[Max].statusa[1]==1)
+        {
             printf("\nValor do aluguel:\n-");
             scanf("%lf", &info[Max].valor);
-        }else if(info[Max].statusa[1]==2){
-		    printf("\nValor do Apartamento:\n-");
+
+        }
+        else if(info[Max].statusa[1]==2)
+        {
+            printf("\nValor do Apartamento:\n-");
             scanf("%lf", &info[Max].valor);
         }
-			if(conectar(1)){
-        	    printf("VEIO AQUI");
-        	    // TITULO
-        	    // AREA 
-        	    // NUMERO DE QUARTOS
-        	    // POSIÇÃO
-        	    // ANDAR
-        	    // VALOR DE CONDOMINIO
-        	    // NUMERO DE VAGAS
-        	    // RUA 
-        	    // NUMERO
-        	    // BAIRRO
-        	    // CEP
-        	    // CIDADE
-        	    // SIUTAÇÃO
-        	    // VALOR DO AP
-        	    fprintf(file, "Titulo: %s\n",                 apartamento[Max].titulo);
-            	fprintf(file, "Area do AP em M2: %.2lf\n",    apartamento[Max].area);
-            	fprintf(file, "Numero de quartos: %d\n",      apartamento[Max].Nquartos);
-            	fprintf(file, "Posicao: %s\n",                apartamento[Max].posicao);
-            	fprintf(file, "Pavimentos: %d\n",             apartamento[Max].andar);
-            	fprintf(file, "Valor do Condominio: %.2lf\n", apartamento[Max].vCondominio);
-            	fprintf(file, "Numero de vagas: %d\n",        apartamento[Max].Nvagas);
-            	
-            	fprintf(file, "Rua: %s\n",          endereco[Max].Nrua);
-            	fprintf(file, "Numero: %d\n",       endereco[Max].Nap);
-            	fprintf(file, "Bairro: %s\n",       endereco[Max].bairro);
-	            fprintf(file, "CEP: %d\n",          endereco[Max].cep);
-	            fprintf(file, "Cidade: %s\n",       endereco[Max].cidade);
-	            fprintf(file, "Status: %d\n",       info[Max].statusa[1]);
-	            fprintf(file, "Valor: R$ %.2llf\n", info[Max].valor);
-	            desconectar();
-        	}
+
+        cadastrar2(2);
 
         printf("\n1 - Continuar\n2 - Voltar\n0 - Sair\n-");
         scanf("%d", &op);
@@ -334,8 +295,12 @@ void terrenoo()
         getchar();
         fgets(terreno[Max].titulo, sizeof(terreno[Max].titulo),stdin);
 
+        printf("\nDescricao do terreno:\n-");
+        fgets(terreno[Max].Informacoes, sizeof(terreno[Max].Informacoes),stdin);
+
         printf("\nArea do terreno:\n-");
         scanf("%lf", &terreno[Max].area);
+
 
 //ENDEREÇO
         printf("\nNome da Rua:\n-");
@@ -371,6 +336,8 @@ void terrenoo()
             scanf("%lf", &info[Max].valor);
         }
 
+        cadastrar2(3);
+
         printf("\n1 - Continuar\n2 - Voltar\n0 - Sair\n-");
         scanf("%d", &op);
 
@@ -395,8 +362,12 @@ void consultar()
     system("clear");
     system("cls");
 }
-int conectar(int tipo){
-    if(tipo == 1) {//Cadastrar
+int conectar(int tipo)
+{
+    //TIPO 1 = CADASTRAR
+    //TIPO 2 = MOSTRAR
+    if(tipo == 1)  //Cadastrar
+    {
         file=fopen("arquivo.txt","a");
     }
 
@@ -411,6 +382,66 @@ int conectar(int tipo){
     }
     return 0;
 }
-void desconectar(){
+void cadastrar2(int tipo)
+{
+    //TIPO 1 = CASA
+    //TIPO 2 = APARTAMENTO
+    //TIPO 3 = TERRENO
+    if(conectar(1))
+    {
+        fprintf(file, "{\n");
+        if(tipo == 3)
+        {
+            fprintf(file, "TERRENO\n");
+            fprintf(file, "%s", strupr(terreno[Max].titulo));
+            fprintf(file, "%s", strupr(terreno[Max].Informacoes));
+            fprintf(file, "%.2lf m\n", terreno[Max].area);
+        }
+        if(tipo == 1)
+        {
+            fprintf(file, "CASA\n");
+            fprintf(file, "%s", strupr(casa[Max].titulo));
+            fprintf(file, "%d\n", casa[Max].pavimentos);
+            fprintf(file, "%d\n", casa[Max].Nquartos);
+            fprintf(file, "%.2lf m\n", casa[Max].areaTerreno);
+            fprintf(file, "%.2lf m\n", casa[Max].areaConstruida);
+        }
+        if (tipo == 2)
+        {
+            fprintf(file, "APARTAMENTO\n");
+            fprintf(file, "%s", strupr(apartamento[Max].titulo));
+            fprintf(file, "%d\n", apartamento[Max].Nvagas);
+            fprintf(file, "%d\n", apartamento[Max].Nquartos);
+            fprintf(file, "%.2lf m\n", apartamento[Max].area);
+            fprintf(file, "%.2lf\n", apartamento[Max].vCondominio);
+            fprintf(file, "%d\n", apartamento[Max].andar);
+            fprintf(file, "%s", apartamento[Max].posicao);
+        }
+        fprintf(file, "%.2lf m\n", casa[Max].areaConstruida);
+        fprintf(file, "%s", strupr(endereco[Max].Nrua));
+        fprintf(file, "%d\n", endereco[Max].Ncasa);
+        fprintf(file, "%s", strupr(endereco[Max].bairro));
+        fprintf(file, "%d\n", endereco[Max].cep);
+        fprintf(file, "%s", strupr(endereco[Max].cidade));
+        if(tipo == 1)
+        {
+            fprintf(file, "%d\n", info[Max].statusc[1]);
+        }
+        if(tipo == 2)
+        {
+            fprintf(file, "%d\n", info[Max].statusa[1]);
+        }
+        if(tipo == 3)
+        {
+            fprintf(file, "%d\n", info[Max].statust[1]);
+        }
+        fprintf(file, "%.2llf\n", info[Max].valor);
+        fprintf(file, "}\n");
+        desconectar();
+    }
+
+}
+void desconectar()
+{
     fclose(file);
 }
