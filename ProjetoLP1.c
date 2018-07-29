@@ -361,6 +361,188 @@ void consultar()
 {
     system("clear");
     system("cls");
+    int op;
+    do
+    {
+        //system("cls");
+
+        printf("1 - Consultar todos os imoveis\n0 - voltar\n-");
+        scanf("%d", &op);
+
+        switch(op)
+        {
+        case 1:
+            consultarImoveis();
+            break;
+        case 0:
+            menu();
+            break;
+        }
+    }
+    while(op != 0);
+
+}
+int consultarImoveis()
+{
+    /*
+    14 linhas - terreno
+    16 linhas - casa
+    18 linhas - apartamento
+    */
+    //TIPO 1 = CASA
+    //TIPO 2 = APARTAMENTO
+    //TIPO 3 = TERRENO
+    char linha[10000];
+    char caractere;
+    int indiceInicial =0;
+    int indiceLinha = 0;
+    int tipo;
+    int indiceAnterior = 0;
+    if(conectar(2))
+    {
+        while((caractere=fgetc(file)) != EOF)
+        {
+            //printf("indiceLinha: %d\n\n",indiceLinha);
+            //printf("caractere: %c\n\n",caractere);
+            if(caractere != '\n')
+            {
+                linha[indiceInicial] = caractere;
+                indiceInicial ++;
+
+            }
+            else
+            {
+                //printf("%s\n",linha);
+                if(caractere == '{')
+                {
+                    indiceLinha = 0;
+                }
+                else
+                {
+                    indiceLinha ++;
+                    if(indiceLinha == 1)
+                    {
+                        if(strcmp(linha,"CASA"))
+                        {
+                            tipo=1;
+                            printf("=========CASA=========");
+                        }
+                        else if(strcmp(linha,"APARTAMENTO"))
+                        {
+                            tipo=2;
+                            printf("=========APARTA=========");
+                        }
+                        else if(strcmp(linha,"TERRENO"))
+                        {
+                            tipo=3;
+                            printf("=========TERRENO=========");
+                        }
+                        printf("\n");
+                    }
+                    else
+                    {
+                        int i;
+                        //printf("AQUI");
+                        if(tipo == 1)
+                        {
+                            if(indiceLinha == 2)
+                            {
+
+                                printf("Título: ");
+                                imprimir(linha,indiceAnterior,indiceInicial);
+
+                            }
+                            else if(indiceLinha == 3)
+                            {
+                                printf("Qnt. de pavimenos: ");
+                                imprimir(linha,indiceAnterior,indiceInicial);
+                            }
+                            else if(indiceLinha == 4)
+                            {
+                                printf("Qnt. de quartos: ");
+                                imprimir(linha,indiceAnterior,indiceInicial);
+                            }
+                            else if(indiceLinha == 5)
+                            {
+                                printf("Area do terreno: ");
+                                imprimir(linha,indiceAnterior,indiceInicial);
+                            }
+                            else if(indiceLinha == 6)
+                            {
+                                printf("Area construida: ");
+                                imprimir(linha,indiceAnterior,indiceInicial);
+                            }
+                            else if(indiceLinha == 7)
+                            {
+                                printf("Area construida: ");
+                                imprimir(linha,indiceAnterior,indiceInicial);
+                            }
+                            else if(indiceLinha == 8)
+                            {
+                                printf("Rua: ");
+                                imprimir(linha,indiceAnterior,indiceInicial);
+                            }
+                            else if(indiceLinha == 9)
+                            {
+                                printf("Nº: ");
+                                imprimir(linha,indiceAnterior,indiceInicial);
+                            }
+                            else if(indiceLinha == 10)
+                            {
+                                printf("Bairro: ");
+                                imprimir(linha,indiceAnterior,indiceInicial);
+                            }
+                            else if(indiceLinha == 11)
+                            {
+                                printf("CEP: ");
+                                imprimir(linha,indiceAnterior,indiceInicial);
+                            }
+                            else if(indiceLinha == 12)
+                            {
+                                printf("Cidade: ");
+                                imprimir(linha,indiceAnterior,indiceInicial);
+                            }
+                            else if(indiceLinha == 13)
+                            {
+                                if(strcmp(linha,"1"))
+                                {
+                                    printf("Status: ALUGA-SE\n");
+                                }
+                                else
+                                {
+                                    printf("Status: VENDE-SE\n");
+                                }
+                            }
+                            else if(indiceLinha == 14)
+                            {
+                                printf("Valor: R$ ",linha);
+                                imprimir(linha,indiceAnterior,indiceInicial);
+                            }
+
+
+                        }
+                        else if(tipo == 2)
+                        {
+
+                        }
+                        else if(tipo == 3)
+                        {
+
+                        }
+                    }
+                }
+                indiceAnterior = indiceInicial;
+            }
+        }
+    }
+}
+
+void imprimir(char msg[],int anterior, int atual){
+    int i;
+    for(i=anterior;i<=atual;i++){
+        printf("%c",msg[i]);
+    }
+    printf("\n");
 }
 int conectar(int tipo)
 {
@@ -369,6 +551,10 @@ int conectar(int tipo)
     if(tipo == 1)  //Cadastrar
     {
         file=fopen("arquivo.txt","a");
+    }
+    else if(tipo == 2)
+    {
+        file=fopen("arquivo.txt","r");
     }
 
     if(file==NULL)
